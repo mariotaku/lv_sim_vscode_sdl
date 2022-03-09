@@ -115,13 +115,13 @@
 #endif
 
 #if USE_SDL_GPU
-#  define SDL_HOR_RES     480
-#  define SDL_VER_RES     480
+#  define SDL_HOR_RES     800
+#  define SDL_VER_RES     600
 #  define MONITOR_HOR_RES     SDL_HOR_RES
 #  define MONITOR_VER_RES     SDL_VER_RES
 
 /* Scale window by this factor (useful when simulating small screens) */
-#  define SDL_ZOOM          2
+#  define SDL_ZOOM          1
 
 /*Eclipse: <SDL2/SDL.h>    Visual Studio: <SDL.h>*/
 #  define SDL_INCLUDE_PATH    <SDL2/SDL.h>
