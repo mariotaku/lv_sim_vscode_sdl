@@ -42,7 +42,7 @@
 #define LV_MEM_CUSTOM      0
 #if LV_MEM_CUSTOM == 0
 /*Size of the memory available for `lv_mem_alloc()` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (1024U * 1024U)          /*[bytes]*/
+#  define LV_MEM_SIZE    (64 * 1024U * 1024U)          /*[bytes]*/
 
 /*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.*/
 #  define LV_MEM_ADR          0     /*0: unused*/
@@ -61,17 +61,17 @@
  *====================*/
 
 /*Default display refresh period. LVG will redraw changed ares with this period time*/
-#define LV_DISP_DEF_REFR_PERIOD     30      /*[ms]*/
+#define LV_DISP_DEF_REFR_PERIOD     17      /*[ms]*/
 
 /*Input device read period in milliseconds*/
-#define LV_INDEV_DEF_READ_PERIOD    30      /*[ms]*/
+#define LV_INDEV_DEF_READ_PERIOD    5      /*[ms]*/
 
 /*Use a custom tick source that tells the elapsed time in milliseconds.
  *It removes the need to manually update the tick with `lv_tick_inc()`)*/
-#define LV_TICK_CUSTOM     0
+#define LV_TICK_CUSTOM     1
 #if LV_TICK_CUSTOM
-#define LV_TICK_CUSTOM_INCLUDE  "Arduino.h"         /*Header for the system time function*/
-#define LV_TICK_CUSTOM_SYS_TIME_EXPR (millis())     /*Expression evaluating to current system time in ms*/
+#define LV_TICK_CUSTOM_INCLUDE  <SDL2/SDL.h>   /*Header for the system time function*/
+#define LV_TICK_CUSTOM_SYS_TIME_EXPR (SDL_GetTicks())     /*Expression evaluating to current system time in ms*/
 #endif   /*LV_TICK_CUSTOM*/
 
 /*Default Dot Per Inch. Used to initialize default sizes such as widgets sized, style paddings.
@@ -133,7 +133,8 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h"*/
 #define LV_USE_GPU_NXP_VG_LITE   0
 
 /*Use SDL's accelerated API*/
-#define LV_USE_GPU_SDL           0
+#define LV_USE_DRAW_SDL           1
+#define LV_USE_DRAW_NANOVG        1
 
 /*-------------
  * Logging
@@ -181,8 +182,8 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h"*/
 #define LV_USE_ASSERT_OBJ           1   /*Check the object's type and existence (e.g. not deleted). (Slow)*/
 
 /*Add a custom handler when assert happens e.g. to restart the MCU*/
-#define LV_ASSERT_HANDLER_INCLUDE   <stdint.h>
-#define LV_ASSERT_HANDLER   while(1);   /*Halt by default*/
+#define LV_ASSERT_HANDLER_INCLUDE   <stdlib.h>
+#define LV_ASSERT_HANDLER   abort();   /*Halt by default*/
 
 /*-------------
  * Others
@@ -199,7 +200,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h"*/
 #define LV_USE_REFR_DEBUG       0
 
 /*Change the built in (v)snprintf functions*/
-#define LV_SPRINTF_CUSTOM   0
+#define LV_SPRINTF_CUSTOM   1
 #if LV_SPRINTF_CUSTOM
 #  define LV_SPRINTF_INCLUDE <stdio.h>
 #  define lv_snprintf     snprintf
@@ -500,6 +501,8 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h"*/
 
 /*A layout similar to Grid in CSS.*/
 #define LV_USE_GRID     1
+
+#define LV_USE_FRAGMENT 1
 
 /*==================
 * EXAMPLES
